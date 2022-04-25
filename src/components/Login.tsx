@@ -1,7 +1,12 @@
 import { Form, Input, Button, Result } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import api from "../utils/api";
+import { AppState } from "../store";
+import { login } from "../store/actions/userActions";
+import { LoginForm, UserDispatch } from "../types/user";
 import showError from "../utils/showError";
+import showSuccess from "../utils/showSuccess";
 
 export function useLocationState<T = unknown>() {
     const { state } = useLocation();
@@ -12,22 +17,25 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocationState<{ newRegister?: boolean }>();
     //console.log("newRegister...", location?.newRegister);
+    const dispatch: UserDispatch = useDispatch();
+    const handleSubmit = (values: LoginForm) => {
+        dispatch(login(values));
+    };
+    const { data, error } = useSelector((state: AppState) => state.user);
 
-    const onFinish = async (values: any) => {
-        console.log("Success:", values);
-        try {
-            await api.post("/users/login", values);
+    useEffect(() => {
+        error && showError(error);
+    }, [error]);
+
+    useEffect(() => {
+        data.username && showSuccess("You have successfully logged in!");
+    }, [data.username]);
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
             navigate("/");
-        } catch (error) {
-            console.log({ error });
-            showError((error as any).response.data.errorMessage);
         }
-    };
-
-    const onFinishFailed = (error: any) => {
-        console.log("Failed:", error);
-        showError((error as any).response.data.errorMessage);
-    };
+    }, [data, navigate]);
 
     return (
         <Form
@@ -35,8 +43,7 @@ const Login = () => {
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            onFinish={handleSubmit}
             autoComplete="off"
         >
             <h2 style={{ textAlign: "center", marginBottom: 40 }}>
