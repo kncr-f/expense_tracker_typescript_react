@@ -1,7 +1,7 @@
 import Register from "./components/Register";
 import { Routes, Route } from "react-router-dom";
-import React from "react";
 import { Layout, Menu } from "antd";
+import Login from "./components/Login";
 
 const { Header, Content, Footer } = Layout;
 
@@ -26,6 +26,9 @@ function App() {
             >
                 <Routes>
                     <Route path="/register" element={<Register />} />
+                </Routes>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
                 </Routes>
             </Content>
             <Footer style={{ textAlign: "center" }}>

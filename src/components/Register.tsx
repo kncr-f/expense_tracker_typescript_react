@@ -1,10 +1,7 @@
-import { Form, Input, Button, message, Space } from "antd";
+import { Form, Input, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
-
-const showError = (errorMessage: string) => {
-    message.error(errorMessage);
-};
+import showError from "../utils/showError";
 
 const Register = () => {
     const layout = {
@@ -28,7 +25,7 @@ const Register = () => {
 
         try {
             await api.post("/users/register", values);
-            navigate("/login");
+            navigate("/login", { state: { newRegister: true } });
         } catch (error) {
             console.log({ error });
             showError((error as any).response.data.errorMessage);
