@@ -2,6 +2,8 @@ import Register from "./components/Register";
 import { Routes, Route } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import Login from "./components/Login";
+import PrivateRoute from "./components/PrivateRoute";
+import Categories from "./components/Categories";
 
 const { Header, Content, Footer } = Layout;
 
@@ -30,6 +32,13 @@ function App() {
                 <Routes>
                     <Route path="/login" element={<Login />} />
                 </Routes>
+                {/* <Routes>
+                    <Route
+                        path="/categories/*"
+                        element={<PrivateRoute component={Categories} />}
+                    />
+                </Routes> */}
+                <PrivateRoute path="/categories" component={Categories} />
             </Content>
             <Footer style={{ textAlign: "center" }}>
                 Expense Tracker @ made by kncr 2022
