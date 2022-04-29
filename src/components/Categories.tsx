@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { Button, Form, Modal, Select, Table, Tag, Input } from "antd";
+import { Button, Form, Modal, Select, Table, Tag, Input, Space } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState } from "../store";
-import { addCategory, getCategories } from "../store/actions/categoryActions";
+import {
+    addCategory,
+    getCategories,
+    updateCategory,
+} from "../store/actions/categoryActions";
 import { Category, CategoryDispatch, CategoryForm } from "../types/category";
 import { SketchPicker } from "react-color";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 type Mode = "new" | "edit";
 
@@ -25,6 +30,7 @@ const Categories = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [mode, setMode] = useState<Mode>("new");
     const [form, setForm] = useState<CategoryForm>(emptyForm);
+    const [updateId, setUpdateId] = useState<number | null>(null);
 
     const showModal = (mode: Mode) => {
         setIsModalVisible(true);
@@ -32,16 +38,20 @@ const Categories = () => {
     };
 
     const handleOk = () => {
-        dispatch(addCategory(form));
+        if (mode === "new") dispatch(addCategory(form));
+        else if (mode === "edit" && typeof updateId === "number")
+            dispatch(updateCategory(form, updateId));
         setIsModalVisible(false);
         setMode("new");
         setForm(emptyForm);
+        setUpdateId(null);
     };
 
     const handleCancel = () => {
         setIsModalVisible(false);
         setMode("new");
         setForm(emptyForm);
+        setUpdateId(null);
     };
 
     const columns = [
@@ -59,16 +69,23 @@ const Categories = () => {
             },
         },
 
-        //    {
-        //     title: 'Action',
-        //     key: 'action',
-        //     render: (text, record) => (
-        //       <Space size="middle">
-        //         <a>Invite {record.name}</a>
-        //         <a>Delete</a>
-        //       </Space>
-        //     ),
-        //   },
+        {
+            title: "Action",
+            key: "action",
+            render: (text: string, category: Category) => (
+                <Space size="middle">
+                    <EditOutlined
+                        style={{ color: "darkblue" }}
+                        onClick={() => {
+                            showModal("edit");
+                            setForm(category);
+                            setUpdateId(category.id);
+                        }}
+                    />
+                    <DeleteOutlined style={{ color: "fuchsia" }} />
+                </Space>
+            ),
+        },
     ];
     const dispatch: CategoryDispatch = useDispatch();
 
@@ -105,6 +122,7 @@ const Categories = () => {
                         <Form.Item label="Category Type">
                             <Select
                                 defaultValue="expense"
+                                value={form.type}
                                 onChange={(type: any) =>
                                     setForm({ ...form, type })
                                 }
@@ -128,7 +146,7 @@ const Categories = () => {
                     </Form>
                 </Modal>
             </div>
-            <Table columns={columns} dataSource={data} />
+            <Table loading={loading} columns={columns} dataSource={data} />
         </>
     );
 };

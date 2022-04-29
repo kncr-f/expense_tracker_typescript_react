@@ -9,7 +9,7 @@ export interface CategoryState {
 export interface Category {
     id: number;
     name: string;
-    type: string;
+    type: "income" | "expense";
     color: string;
 }
 
@@ -45,13 +45,29 @@ interface ADD_CATEGORY_ERROR {
     type: "ADD_CATEGORY_ERROR";
 }
 
+interface UPDATE_CATEGORY_START {
+    type: "UPDATE_CATEGORY_START";
+}
+
+interface UPDATE_CATEGORY_SUCCESS {
+    type: "UPDATE_CATEGORY_SUCCESS";
+    payload: Category;
+}
+
+interface UPDATE_CATEGORY_ERROR {
+    type: "UPDATE_CATEGORY_ERROR";
+}
+
 export type CategoryAction =
     | GET_CATEGORIES_START
     | GET_CATEGORIES_SUCCESS
     | GET_CATEGORIES_ERROR
     | ADD_CATEGORY_START
     | ADD_CATEGORY_SUCCESS
-    | ADD_CATEGORY_ERROR;
+    | ADD_CATEGORY_ERROR
+    | UPDATE_CATEGORY_START
+    | UPDATE_CATEGORY_SUCCESS
+    | UPDATE_CATEGORY_ERROR;
 
 export type CategoryDispatch = ThunkDispatch<
     CategoryState,

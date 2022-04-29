@@ -35,6 +35,22 @@ const categoryReducer = (
                 loading: false,
                 error: "Error adding categories",
             };
+        case "UPDATE_CATEGORY_START":
+            return { ...state, loading: true, error: "" };
+        case "UPDATE_CATEGORY_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                data: state.data.map((item) =>
+                    item.id === action.payload.id ? action.payload : item
+                ),
+            };
+        case "UPDATE_CATEGORY_ERROR":
+            return {
+                ...state,
+                loading: false,
+                error: "Error updating categories",
+            };
         default:
             return state;
     }
