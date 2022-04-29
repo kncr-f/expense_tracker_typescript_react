@@ -58,6 +58,19 @@ interface UPDATE_CATEGORY_ERROR {
     type: "UPDATE_CATEGORY_ERROR";
 }
 
+interface DELETE_CATEGORY_START {
+    type: "DELETE_CATEGORY_START";
+}
+
+interface DELETE_CATEGORY_SUCCESS {
+    type: "DELETE_CATEGORY_SUCCESS";
+    payload: number;
+}
+
+interface DELETE_CATEGORY_ERROR {
+    type: "DELETE_CATEGORY_ERROR";
+}
+
 export type CategoryAction =
     | GET_CATEGORIES_START
     | GET_CATEGORIES_SUCCESS
@@ -67,7 +80,10 @@ export type CategoryAction =
     | ADD_CATEGORY_ERROR
     | UPDATE_CATEGORY_START
     | UPDATE_CATEGORY_SUCCESS
-    | UPDATE_CATEGORY_ERROR;
+    | UPDATE_CATEGORY_ERROR
+    | DELETE_CATEGORY_START
+    | DELETE_CATEGORY_SUCCESS
+    | DELETE_CATEGORY_ERROR;
 
 export type CategoryDispatch = ThunkDispatch<
     CategoryState,
