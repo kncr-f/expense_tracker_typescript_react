@@ -12,8 +12,7 @@ import {
 import { Category, CategoryDispatch, CategoryForm } from "../types/category";
 import { SketchPicker } from "react-color";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-
-type Mode = "new" | "edit" | "delete";
+import { Mode } from "fs";
 
 const emptyForm: CategoryForm = {
     name: "",
@@ -21,7 +20,6 @@ const emptyForm: CategoryForm = {
     color: "black",
 };
 
-console.log(Modal);
 const Categories = () => {
     const { data, loading } = useSelector(
         (state: AppState) => state.categories
