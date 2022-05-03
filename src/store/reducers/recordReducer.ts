@@ -35,36 +35,36 @@ const recordReducer = (
                 loading: false,
                 error: "Error adding record",
             };
-        // case "UPDATE_CATEGORY_START":
-        //     return { ...state, loading: true, error: "" };
-        // case "UPDATE_CATEGORY_SUCCESS":
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         data: state.data.map((item) =>
-        //             item.id === action.payload.id ? action.payload : item
-        //         ),
-        //     };
-        // case "UPDATE_CATEGORY_ERROR":
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         error: "Error updating categories",
-        //     };
-        // case "DELETE_CATEGORY_START":
-        //     return { ...state, loading: true, error: "" };
-        // case "DELETE_CATEGORY_SUCCESS":
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         data: state.data.filter((item) => item.id !== action.payload),
-        //     };
-        // case "DELETE_CATEGORY_ERROR":
-        //     return {
-        //         ...state,
-        //         loading: false,
-        //         error: "Error deleting categories",
-        //     };
+        case "UPDATE_RECORD_START":
+            return { ...state, loading: true, error: "" };
+        case "UPDATE_RECORD_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                data: state.data.map((item) =>
+                    item.id === action.payload.id ? action.payload : item
+                ),
+            };
+        case "UPDATE_RECORD_ERROR":
+            return {
+                ...state,
+                loading: false,
+                error: "Error updating record",
+            };
+        case "DELETE_RECORD_START":
+            return { ...state, loading: true, error: "" };
+        case "DELETE_RECORD_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                data: state.data.filter((item) => item.id !== action.payload),
+            };
+        case "DELETE_RECORD_ERROR":
+            return {
+                ...state,
+                loading: false,
+                error: "Error deleting record",
+            };
         default:
             return state;
     }
