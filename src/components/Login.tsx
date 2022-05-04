@@ -49,19 +49,15 @@ const Login = () => {
             <h2 style={{ textAlign: "center", marginBottom: 40 }}>
                 Please Login
             </h2>
-            <Result
-                status="success"
-                title="You successfully signed up!"
-                subTitle="Please login using your
-                    credentials."
-            />
-            {location?.newRegister && (
-                <p>
-                    You successfully signed up. Please login using your
-                    credentials.
-                </p>
-            )}
 
+            {location?.newRegister && (
+                <Result
+                    status="success"
+                    title="You successfully signed up!"
+                    subTitle="Please login using your
+                    credentials."
+                />
+            )}
             <Form.Item
                 label="Username"
                 name="username"
@@ -71,7 +67,6 @@ const Login = () => {
             >
                 <Input />
             </Form.Item>
-
             <Form.Item
                 label="Password"
                 name="password"
@@ -81,7 +76,6 @@ const Login = () => {
             >
                 <Input.Password />
             </Form.Item>
-
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <Button type="primary" htmlType="submit">
                     Submit

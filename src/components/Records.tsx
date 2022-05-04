@@ -219,7 +219,10 @@ const Records = () => {
                                     </Select.Option>
                                     {categoryData.map((category) => {
                                         return (
-                                            <Select.Option value={category.id}>
+                                            <Select.Option
+                                                value={category.id}
+                                                key={category.id}
+                                            >
                                                 {category.name}
                                             </Select.Option>
                                         );
@@ -232,7 +235,12 @@ const Records = () => {
                     ) : null}
                 </Modal>
             </div>
-            <Table loading={loading} columns={columns} dataSource={data} />
+            <Table
+                loading={loading}
+                columns={columns}
+                dataSource={data}
+                rowKey="id"
+            />
         </>
     );
 };
